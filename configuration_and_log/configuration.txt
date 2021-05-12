@@ -1,2 +1,2 @@
-/home/connectivity_test/nidhi.txt
-/home/connectivity_test/sidd.txt
+/etc/apache2/ports.conf
+/var/www/html/index.html
