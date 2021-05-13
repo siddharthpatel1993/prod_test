@@ -27,10 +27,9 @@ def stop_service():
     subprocess.call("service apache2 status", shell=True)
 
 def deploy_service():
-
+    subprocess.check_output("cp") 
 
 def url_service_function1():
-
     # Using readlines()
     file1 = open('../configuration_and_log/configuration.txt', 'r')
     Lines = file1.readlines()
@@ -86,9 +85,21 @@ enter 7 check the alarm
 enter 8 to notify everyone throgh email''')
 a = int(input())
 if (a==1):
-    url_service_function()
+    copy_config()
 elif(a==2):
-    url_service_function1()
+    stop_service()
+elif(a==3):
+    deploy_service()
+elif(a==4):
+    compare_config()
+elif(a==5):
+    check_checksum() 
+elif(a==6):
+    start_app()
+elif(a==7):
+    check_alarm()
+elif(a==8):
+    Notify_everyone()
 else:
     print("Wrong choice")
 
