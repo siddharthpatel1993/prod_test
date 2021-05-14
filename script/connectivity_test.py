@@ -72,7 +72,7 @@ def compare_config():
 
         s0 = re.compile(r'/[a-z]+[.][a-z]+')
         m0 = s0.search(a1)
-        print(m0.group())
+        #print(m0.group())
         a0=m0.group().lstrip('/')
 
         print("******Works start**********")
@@ -101,6 +101,7 @@ def Notify_everyone():
     main_func()
 
 def main_func():
+    print("*****main option starts******")
     print('''enter 1 to copy the config files
 enter 2 to stop the service
 enter 3 to deploy the service
@@ -109,6 +110,7 @@ enter 5 see the checksum if that is ok
 enter 6 to start the app
 enter 7 check the alarm
 enter 8 to notify everyone throgh email''')
+    print("*******main option ends********")
     a = int(input())
     if (a==1):
         copy_config()
