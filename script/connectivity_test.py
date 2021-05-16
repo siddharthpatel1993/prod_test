@@ -2,7 +2,7 @@ import subprocess
 import re
 import time
 
-rel_name="may12"
+rel_name = input("Enter the release name\n")
 
 def copy_config():
 
@@ -100,6 +100,9 @@ def check_alarm():
 def Notify_everyone():
     main_func()
 
+def service_status():
+    subprocess.call("ps -ef | grep -i apache2 | grep -v grep", shell=True)
+
 def main_func():
     print("*****main option starts******")
     print('''enter 1 to copy the config files
@@ -109,7 +112,8 @@ enter 4 to compare the config files
 enter 5 see the checksum if that is ok
 enter 6 to start the app
 enter 7 check the alarm
-enter 8 to notify everyone throgh email''')
+enter 8 to notify everyone throgh email
+enter 9 to check the status''')
     print("*******main option ends********")
     a = int(input())
     if (a==1):
@@ -128,9 +132,10 @@ enter 8 to notify everyone throgh email''')
         check_alarm()
     elif(a==8):
         Notify_everyone()
+    elif(a==9):
+        service_status()
     else:
         print("Wrong choice")
         #break
 
 main_func()
-
