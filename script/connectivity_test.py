@@ -2,16 +2,15 @@ import subprocess
 import re
 import time
 
-rel_name = input("Enter the release name\n")
-
 def copy_config():
-
+    global rel_name
     # Using readlines()
     file1 = open('../configuration_and_log/configuration.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
     count = 0
+    rel_name = input("Enter the release name\n")
     #Strips the newline character
     for line in Lines:
         count = count + 1
@@ -76,7 +75,7 @@ def compare_config():
         a0=m0.group().lstrip('/')
 
         print("******Works start**********")
-        print("Showing the difference between "+ a1 +" and ~/.may12/"+ a0 +"")
+        print("Showing the difference between "+ a1 +" and ~/."+ rel_name +"/"+ a0 +"")
         subprocess.call("diff "+ a1 +" ~/."+ rel_name +"/"+ a0 +"", shell=True)
         print("******Done*********")
         time.sleep(3)
@@ -101,7 +100,14 @@ def Notify_everyone():
     main_func()
 
 def service_status():
-    subprocess.call("ps -ef | grep -i apache2 | grep -v grep", shell=True)
+    a = subprocess.check_output("ps -ef | grep -i apache2 | grep -v grep | wc -l", shell=True)
+    
+    if (int(a)==4):
+        print("All processes are up and running")
+    else:
+        print("Apache is not running")
+
+    main_func()
 
 def main_func():
     print("*****main option starts******")
@@ -112,30 +118,31 @@ enter 4 to compare the config files
 enter 5 see the checksum if that is ok
 enter 6 to start the app
 enter 7 check the alarm
-enter 8 to notify everyone throgh email
-enter 9 to check the status''')
+enter 8 to notify everyone through email
+enter 9 to check the status
+enter other than 1-9 to exit''')
     print("*******main option ends********")
-    a = int(input())
-    if (a==1):
+    a = input()
+    if (a=='1'):
         copy_config()
-    elif(a==2):
+    elif(a=='2'):
         stop_service()
-    elif(a==3):
+    elif(a=='3'):
         deploy_service()
-    elif(a==4):
+    elif(a=='4'):
         compare_config()
-    elif(a==5):
+    elif(a=='5'):
         check_checksum() 
-    elif(a==6):
+    elif(a=='6'):
         start_service()
-    elif(a==7):
+    elif(a=='7'):
         check_alarm()
-    elif(a==8):
+    elif(a=='8'):
         Notify_everyone()
-    elif(a==9):
+    elif(a=='9'):
         service_status()
     else:
-        print("Wrong choice")
+        print("Exiting...")
         #break
 
 main_func()
