@@ -1,2 +1,15 @@
-/etc/apache2/ports.conf
-/var/www/html/index.html
+memory.swap.max
+memory.swap.high
+memory.swap.events
+memory.swap.current
+memory.stat
+memory.pressure
+memory.oom.group
+memory.numa_stat
+memory.min
+memory.max
+memory.low
+memory.high
+memory.events.local
+memory.events
+memory.current
