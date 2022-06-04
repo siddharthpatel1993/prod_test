@@ -18,9 +18,8 @@ def copy_config():
 
         a1 = "{}".format(line.strip())
         #print(a1)
-        subprocess.check_output("mkdir -p ~/."+ rel_name +"", shell=True)
-        subprocess.check_output("cp "+ a1 +" ~/."+ rel_name +"", shell=True)
-    main_func()
+        subprocess.check_output("mkdir -p /home/"+ rel_name +"", shell=True)
+        subprocess.check_output("cp /sys/fs/cgroup/"+ a1 +" /home/"+ rel_name +"", shell=True)
 
 def stop_service():
     subprocess.call("service apache2 stop", shell=True)
@@ -62,6 +61,10 @@ def compare_config():
 
     count = 0
     #Strips the newline character
+
+    b1 = input("enter the first dir\n")
+    b2 = input("enter the second dir\n")
+
     for line in Lines:
         count = count + 1
         host_num = count
@@ -69,19 +72,18 @@ def compare_config():
         a1 = "{}".format(line.strip())
         #print(a1)
 
-        s0 = re.compile(r'/[a-z]+[.][a-z]+')
-        m0 = s0.search(a1)
+        #s0 = re.compile(r'/[a-z]+[.][a-z]+')
+        #m0 = s0.search(a1)
         #print(m0.group())
-        a0=m0.group().lstrip('/')
+        #a0=m0.group().lstrip('/')
 
         print("******Works start**********")
-        print("Showing the difference between "+ a1 +" and ~/."+ rel_name +"/"+ a0 +"")
-        subprocess.call("diff "+ a1 +" ~/."+ rel_name +"/"+ a0 +"", shell=True)
+        print("Showing the difference between /home/"+ b1 +"/"+ a1 +"  and /home/"+ b2 +"/"+ a1 +"")
+        subprocess.call("diff /home/"+ b1 +"/"+ a1 +" /home/"+ b2 +"/"+ a1 +"", shell=True)
         print("******Done*********")
-        time.sleep(3)
+        #time.sleep(3)
 
     print("********Completed the Work***********")
-    main_func()
 
 def check_checksum():
     main_func()
@@ -101,7 +103,7 @@ def Notify_everyone():
 
 def service_status():
     a = subprocess.check_output("ps -ef | grep -i apache2 | grep -v grep | wc -l", shell=True)
-    
+
     if (int(a)==4):
         print("All processes are up and running")
     else:
@@ -132,7 +134,7 @@ enter other than 1-9 to exit''')
     elif(a=='4'):
         compare_config()
     elif(a=='5'):
-        check_checksum() 
+        check_checksum()
     elif(a=='6'):
         start_service()
     elif(a=='7'):
