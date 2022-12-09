@@ -17,9 +17,17 @@ def copy_config():
         host_num = count
 
         a1 = "{}".format(line.strip())
-        #print(a1)
-        subprocess.check_output("mkdir -p /home/normaluser/"+ rel_name +"", shell=True)
-        subprocess.check_output(""+ a1 +" >> /home/normaluser/"+ rel_name +"/test.log", shell=True)
+
+        s0 = re.compile(r'.*[,]')
+        m0 = s0.search(a1)
+        command=m0.group().rstrip(',')
+
+        s1 = re.compile(r'[,][a-zA-Z_.]+')
+        m1 = s1.search(a1)
+        file=m1.group().lstrip(',')
+
+        subprocess.check_output("mkdir -p /home/siddsc/"+ rel_name +"", shell=True)
+        subprocess.run(""+ command +" 2>/dev/null 1>/dev/null >> /home/siddsc/"+ rel_name +"/"+file+"", shell=True, stderr=subprocess.PIPE)
 
 def stop_service():
     subprocess.call("service apache2 stop", shell=True)
