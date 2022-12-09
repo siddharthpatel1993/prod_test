@@ -27,7 +27,7 @@ def copy_config():
         file=m1.group().lstrip(',')
 
         subprocess.check_output("mkdir -p /home/siddsc/"+ rel_name +"", shell=True)
-        subprocess.run(""+ command +" 2>/dev/null 1>/dev/null >> /home/siddsc/"+ rel_name +"/"+file+"", shell=True, stderr=subprocess.PIPE)
+        subprocess.run(""+ command +" 2>/dev/null >> /home/siddsc/"+ rel_name +"/"+file+"", shell=True)
 
 def stop_service():
     subprocess.call("service apache2 stop", shell=True)
