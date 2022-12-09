@@ -78,16 +78,14 @@ def compare_config():
         host_num = count
 
         a1 = "{}".format(line.strip())
-        #print(a1)
 
-        #s0 = re.compile(r'/[a-z]+[.][a-z]+')
-        #m0 = s0.search(a1)
-        #print(m0.group())
-        #a0=m0.group().lstrip('/')
+        s1 = re.compile(r'[,][a-zA-Z_.]+')
+        m1 = s1.search(a1)
+        file=m1.group().lstrip(',')
 
         print("******Works start**********")
-        print("Showing the difference between /home/"+ b1 +"/"+ a1 +"  and /home/"+ b2 +"/"+ a1 +"")
-        subprocess.call("diff /home/"+ b1 +"/"+ a1 +" /home/"+ b2 +"/"+ a1 +"", shell=True)
+        print("Showing the difference between /home/siddsc/"+ b1 +"/"+ file +"  and /home/siddsc/"+ b2 +"/"+ file +"")
+        subprocess.call("diff /home/siddsc/"+ b1 +"/"+ file +" /home/siddsc/"+ b2 +"/"+ file +"", shell=True)
         print("******Done*********")
         #time.sleep(3)
 
