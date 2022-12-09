@@ -18,8 +18,8 @@ def copy_config():
 
         a1 = "{}".format(line.strip())
         #print(a1)
-        subprocess.check_output("mkdir -p /home/"+ rel_name +"", shell=True)
-        subprocess.check_output("cp /sys/fs/cgroup/"+ a1 +" /home/"+ rel_name +"", shell=True)
+        subprocess.check_output("mkdir -p /home/normaluser/"+ rel_name +"", shell=True)
+        subprocess.check_output(""+ a1 +" >> /home/normaluser/"+ rel_name +"/test.log", shell=True)
 
 def stop_service():
     subprocess.call("service apache2 stop", shell=True)
@@ -122,6 +122,7 @@ enter 6 to start the app
 enter 7 check the alarm
 enter 8 to notify everyone through email
 enter 9 to check the status
+enter 10 for connectivity test
 enter other than 1-9 to exit''')
     print("*******main option ends********")
     a = input()

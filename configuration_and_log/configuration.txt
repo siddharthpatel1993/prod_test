@@ -1,15 +1,15 @@
-memory.swap.max
-memory.swap.high
-memory.swap.events
-memory.swap.current
-memory.stat
-memory.pressure
-memory.oom.group
-memory.numa_stat
-memory.min
-memory.max
-memory.low
-memory.high
-memory.events.local
-memory.events
-memory.current
+#crontab -l
+printenv
+df -h
+sudo -l
+service --status-all
+apt list
+cp -r /etc/passwd somefile
+#iptables -L
+cp -r /etc/hosts somefile
+ls -ltr /
+ls -ltr /home/
+cp -r /etc/group somefile
+free -m
+ifconfig
+cp -r /etc/os-release somefile
