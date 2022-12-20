@@ -62,8 +62,10 @@ def deploy_service():
     main_func()
 
 def compare_config():
+    x = subprocess.check_output("cat ../configuration_and_log/configuration.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > ../configuration_and_log/configuration1.txt", shell=True)
+    
     # Using readlines()
-    file1 = open('../configuration_and_log/configuration.txt', 'r')
+    file1 = open('../configuration_and_log/configuration1.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
@@ -86,6 +88,7 @@ def compare_config():
         print("******Works start**********")
         print("Showing the difference between /home/siddsc/"+ b1 +"/"+ file +"  and /home/siddsc/"+ b2 +"/"+ file +"")
         subprocess.call("diff /home/siddsc/"+ b1 +"/"+ file +" /home/siddsc/"+ b2 +"/"+ file +"", shell=True)
+        subprocess.check_output("rm -rf ../configuration_and_log/configuration1.txt", shell=True)
         print("******Done*********")
         #time.sleep(3)
 
