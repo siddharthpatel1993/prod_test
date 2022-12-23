@@ -2,10 +2,10 @@ import subprocess
 import re
 import time
 
-def copy_config():
+def copy_osconfig():
     global rel_name
     # Using readlines()
-    file1 = open('../configuration_and_log/configuration.txt', 'r')
+    file1 = open('../configuration_and_log/configuration_os.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
@@ -26,8 +26,41 @@ def copy_config():
         m1 = s1.search(a1)
         file=m1.group().lstrip(',')
 
-        subprocess.check_output("mkdir -p /home/siddsc/"+ rel_name +"", shell=True)
-        subprocess.run(""+ command +" 2>/dev/null >> /home/siddsc/"+ rel_name +"/"+file+"", shell=True)
+        subprocess.check_output("mkdir -p /home/siddos/"+ rel_name +"", shell=True)
+        subprocess.run(""+ command +" 2>/dev/null >> /home/siddos/"+ rel_name +"/"+file+"", shell=True)
+
+
+def copy_appconfig():
+    global rel_name
+    # Using readlines()
+    file1 = open('../configuration_and_log/configuration_app.txt', 'r')
+    Lines = file1.readlines()
+    file1.close()
+
+    count = 0
+    rel_name = input("Enter the release name\n")
+    #Strips the newline character
+    for line in Lines:
+        count = count + 1
+        host_num = count
+
+        a1 = "{}".format(line.strip())
+
+        s0 = re.compile(r'.*[,]')
+        m0 = s0.search(a1)
+        command=m0.group().rstrip(',')
+        
+        s1 = re.compile(r'[,][a-z1-9A-Z_.]+')
+        m1 = s1.search(a1)
+        file=m1.group().lstrip(',')
+
+        print(command)
+        print(file)
+        print("***********************************")
+
+        '''subprocess.check_output("mkdir -p /home/siddapp/"+ rel_name +"", shell=True)
+        subprocess.run(""+ command +" 2>/dev/null >> /home/siddapp/"+ rel_name +"/"+file+"", shell=True)'''
+
 
 def stop_service():
     subprocess.call("service apache2 stop", shell=True)
@@ -61,11 +94,11 @@ def deploy_service():
     print("*****Completed*****")
     main_func()
 
-def compare_config():
-    x = subprocess.check_output("cat ../configuration_and_log/configuration.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > ../configuration_and_log/configuration1.txt", shell=True)
+def compare_osconfig():
+    x = subprocess.check_output("cat ../configuration_and_log/configuration_os.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > ../configuration_and_log/configuration1_os.txt", shell=True)
     
     # Using readlines()
-    file1 = open('../configuration_and_log/configuration1.txt', 'r')
+    file1 = open('../configuration_and_log/configuration1_os.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
@@ -86,9 +119,42 @@ def compare_config():
         file=m1.group().lstrip(',')
 
         print("******Works start**********")
-        print("Showing the difference between /home/siddsc/"+ b1 +"/"+ file +"  and /home/siddsc/"+ b2 +"/"+ file +"")
-        subprocess.call("diff /home/siddsc/"+ b1 +"/"+ file +" /home/siddsc/"+ b2 +"/"+ file +"", shell=True)
-        subprocess.check_output("rm -rf ../configuration_and_log/configuration1.txt", shell=True)
+        print("Showing the difference between /home/siddos/"+ b1 +"/"+ file +"  and /home/siddos/"+ b2 +"/"+ file +"")
+        subprocess.call("diff /home/siddos/"+ b1 +"/"+ file +" /home/siddos/"+ b2 +"/"+ file +"", shell=True)
+        subprocess.check_output("rm -rf ../configuration_and_log/configuration1_os.txt", shell=True)
+        print("******Done*********")
+        #time.sleep(3)
+
+    print("********Completed the Work***********")
+
+def compare_appconfig():
+    x = subprocess.check_output("cat ../configuration_and_log/configuration_app.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > ../configuration_and_log/configuration1_app.txt", shell=True)
+
+    # Using readlines()
+    file1 = open('../configuration_and_log/configuration1_app.txt', 'r')
+    Lines = file1.readlines()
+    file1.close()
+
+    count = 0
+    #Strips the newline character
+
+    b1 = input("enter the first dir\n")
+    b2 = input("enter the second dir\n")
+
+    for line in Lines:
+        count = count + 1
+        host_num = count
+
+        a1 = "{}".format(line.strip())
+
+        s1 = re.compile(r'[,][a-zA-Z_.]+')
+        m1 = s1.search(a1)
+        file=m1.group().lstrip(',')
+
+        print("******Works start**********")
+        print("Showing the difference between /home/siddapp/"+ b1 +"/"+ file +"  and /home/siddapp/"+ b2 +"/"+ file +"")
+        subprocess.call("diff /home/siddapp/"+ b1 +"/"+ file +" /home/siddapp/"+ b2 +"/"+ file +"", shell=True)
+        subprocess.check_output("rm -rf ../configuration_and_log/configuration1_app.txt", shell=True)
         print("******Done*********")
         #time.sleep(3)
 
@@ -122,36 +188,42 @@ def service_status():
 
 def main_func():
     print("*****main option starts******")
-    print('''enter 1 to copy the config files
-enter 2 to stop the service
-enter 3 to deploy the service
-enter 4 to compare the config files
-enter 5 see the checksum if that is ok
-enter 6 to start the app
-enter 7 check the alarm
-enter 8 to notify everyone through email
-enter 9 to check the status
-enter 10 for connectivity test
-enter other than 1-9 to exit''')
+    print('''enter 1 to copy the OS releated config files
+enter 2 to copy the app releated config files
+enter 3 to stop the service
+enter 4 to deploy the service
+enter 5 to compare the os config files
+enter 6 to compare the app config files
+enter 7 see the checksum if that is ok
+enter 8 to start the app
+enter 9 check the alarm
+enter 10 to notify everyone through email
+enter 11 to check the status
+enter 12 for connectivity test
+enter other than 1-12 to exit''')
     print("*******main option ends********")
     a = input()
     if (a=='1'):
-        copy_config()
+        copy_osconfig()
     elif(a=='2'):
+        copy_appconfig()
+    elif (a=='3'):
         stop_service()
-    elif(a=='3'):
-        deploy_service()
     elif(a=='4'):
-        compare_config()
+        deploy_service()
     elif(a=='5'):
-        check_checksum()
-    elif(a=='6'):
-        start_service()
+        compare_osconfig()
+    elif (a=='6'):
+        compare_appconfig()
     elif(a=='7'):
-        check_alarm()
+        check_checksum()
     elif(a=='8'):
-        Notify_everyone()
+        start_service()
     elif(a=='9'):
+        check_alarm()
+    elif(a=='10'):
+        Notify_everyone()
+    elif(a=='11'):
         service_status()
     else:
         print("Exiting...")

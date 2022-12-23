@@ -1,0 +1,7 @@
+service --status-all,os_servicestatus.txt
+apt list | grep installed | grep -v automatic | grep -v auto-removable,os_rpmlist.txt
+cat /var/www/html/index.html ,default_index.txt
+cat /var/www/website1/index.html ,website1_index.txt
+cat /etc/apache2/sites-available/000-default.conf ,default_vh.conf
+cat /etc/apache2/sites-available/website1.conf ,website1_vh.conf
+apache2ctl -M ,modules_enabled.txt
