@@ -54,12 +54,8 @@ def copy_appconfig():
         m1 = s1.search(a1)
         file=m1.group().lstrip(',')
 
-        print(command)
-        print(file)
-        print("***********************************")
-
-        '''subprocess.check_output("mkdir -p /home/siddapp/"+ rel_name +"", shell=True)
-        subprocess.run(""+ command +" 2>/dev/null >> /home/siddapp/"+ rel_name +"/"+file+"", shell=True)'''
+        subprocess.check_output("mkdir -p /home/siddapp/"+ rel_name +"", shell=True)
+        subprocess.run(""+ command +" 2>/dev/null >> /home/siddapp/"+ rel_name +"/"+file+"", shell=True)
 
 
 def stop_service():
@@ -147,7 +143,7 @@ def compare_appconfig():
 
         a1 = "{}".format(line.strip())
 
-        s1 = re.compile(r'[,][a-zA-Z_.]+')
+        s1 = re.compile(r'[,][a-zA-Z_.1-9]+')
         m1 = s1.search(a1)
         file=m1.group().lstrip(',')
 
