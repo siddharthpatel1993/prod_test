@@ -175,7 +175,7 @@ def Notify_everyone():
 def service_status():
     a = subprocess.check_output("ps -ef | grep -i apache2 | grep -v grep | wc -l", shell=True)
 
-    if (int(a)==4):
+    if (int(a)==3):
         print("All processes are up and running")
     else:
         print("Apache is not running")
