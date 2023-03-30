@@ -5,7 +5,7 @@ import time
 def copy_osconfig():
     global rel_name
     # Using readlines()
-    file1 = open('../configuration_and_log/configuration_os.txt', 'r')
+    file1 = open('configuration_and_log/configuration_os.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
@@ -33,7 +33,7 @@ def copy_osconfig():
 def copy_appconfig():
     global rel_name
     # Using readlines()
-    file1 = open('../configuration_and_log/configuration_app.txt', 'r')
+    file1 = open('configuration_and_log/configuration_app.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
@@ -64,7 +64,7 @@ def stop_service():
     main_func()
 
 def deploy_service():
-    file1 = open('../configuration_and_log/configuration.txt', 'r')
+    file1 = open('configuration_and_log/configuration.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
@@ -91,10 +91,10 @@ def deploy_service():
     main_func()
 
 def compare_osconfig():
-    x = subprocess.check_output("cat ../configuration_and_log/configuration_os.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > ../configuration_and_log/configuration1_os.txt", shell=True)
+    x = subprocess.check_output("cat configuration_and_log/configuration_os.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > configuration_and_log/configuration1_os.txt", shell=True)
     
     # Using readlines()
-    file1 = open('../configuration_and_log/configuration1_os.txt', 'r')
+    file1 = open('configuration_and_log/configuration1_os.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
@@ -117,17 +117,17 @@ def compare_osconfig():
         print("******Works start**********")
         print("Showing the difference between /home/siddos/"+ b1 +"/"+ file +"  and /home/siddos/"+ b2 +"/"+ file +"")
         subprocess.call("diff /home/siddos/"+ b1 +"/"+ file +" /home/siddos/"+ b2 +"/"+ file +"", shell=True)
-        subprocess.check_output("rm -rf ../configuration_and_log/configuration1_os.txt", shell=True)
+        subprocess.check_output("rm -rf configuration_and_log/configuration1_os.txt", shell=True)
         print("******Done*********")
         #time.sleep(3)
 
     print("********Completed the Work***********")
 
 def compare_appconfig():
-    x = subprocess.check_output("cat ../configuration_and_log/configuration_app.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > ../configuration_and_log/configuration1_app.txt", shell=True)
+    x = subprocess.check_output("cat configuration_and_log/configuration_app.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > configuration_and_log/configuration1_app.txt", shell=True)
 
     # Using readlines()
-    file1 = open('../configuration_and_log/configuration1_app.txt', 'r')
+    file1 = open('configuration_and_log/configuration1_app.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
@@ -150,7 +150,7 @@ def compare_appconfig():
         print("******Works start**********")
         print("Showing the difference between /home/siddapp/"+ b1 +"/"+ file +"  and /home/siddapp/"+ b2 +"/"+ file +"")
         subprocess.call("diff /home/siddapp/"+ b1 +"/"+ file +" /home/siddapp/"+ b2 +"/"+ file +"", shell=True)
-        subprocess.check_output("rm -rf ../configuration_and_log/configuration1_app.txt", shell=True)
+        subprocess.check_output("rm -rf configuration_and_log/configuration1_app.txt", shell=True)
         print("******Done*********")
         #time.sleep(3)
 
