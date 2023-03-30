@@ -26,8 +26,8 @@ def copy_osconfig():
         m1 = s1.search(a1)
         file=m1.group().lstrip(',')
 
-        subprocess.check_output("mkdir -p /home/siddos/"+ rel_name +"", shell=True)
-        subprocess.run(""+ command +" 2>/dev/null >> /home/siddos/"+ rel_name +"/"+file+"", shell=True)
+        subprocess.check_output("mkdir -p $PWD/.siddos/"+ rel_name +"", shell=True)
+        subprocess.run(""+ command +" 2>/dev/null >> $PWD/.siddos/"+ rel_name +"/"+file+"", shell=True)
 
 
 def copy_appconfig():
@@ -54,8 +54,8 @@ def copy_appconfig():
         m1 = s1.search(a1)
         file=m1.group().lstrip(',')
 
-        subprocess.check_output("mkdir -p /home/siddapp/"+ rel_name +"", shell=True)
-        subprocess.run(""+ command +" 2>/dev/null >> /home/siddapp/"+ rel_name +"/"+file+"", shell=True)
+        subprocess.check_output("mkdir -p $PWD/.siddapp/"+ rel_name +"", shell=True)
+        subprocess.run(""+ command +" 2>/dev/null >> $PWD/.siddapp/"+ rel_name +"/"+file+"", shell=True)
 
 
 def stop_service():
@@ -115,8 +115,8 @@ def compare_osconfig():
         file=m1.group().lstrip(',')
 
         print("******Works start**********")
-        print("Showing the difference between /home/siddos/"+ b1 +"/"+ file +"  and /home/siddos/"+ b2 +"/"+ file +"")
-        subprocess.call("diff /home/siddos/"+ b1 +"/"+ file +" /home/siddos/"+ b2 +"/"+ file +"", shell=True)
+        print("Showing the difference between $PWD/.siddos/"+ b1 +"/"+ file +"  and $PWD/.siddos/"+ b2 +"/"+ file +"")
+        subprocess.call("diff $PWD/.siddos/"+ b1 +"/"+ file +" $PWD/.siddos/"+ b2 +"/"+ file +"", shell=True)
         subprocess.check_output("rm -rf configuration_and_log/configuration1_os.txt", shell=True)
         print("******Done*********")
         #time.sleep(3)
@@ -149,7 +149,7 @@ def compare_appconfig():
 
         print("******Works start**********")
         print("Showing the difference between /home/siddapp/"+ b1 +"/"+ file +"  and /home/siddapp/"+ b2 +"/"+ file +"")
-        subprocess.call("diff /home/siddapp/"+ b1 +"/"+ file +" /home/siddapp/"+ b2 +"/"+ file +"", shell=True)
+        subprocess.call("diff $PWD/.siddapp/"+ b1 +"/"+ file +" $PWD/.siddapp/"+ b2 +"/"+ file +"", shell=True)
         subprocess.check_output("rm -rf configuration_and_log/configuration1_app.txt", shell=True)
         print("******Done*********")
         #time.sleep(3)
