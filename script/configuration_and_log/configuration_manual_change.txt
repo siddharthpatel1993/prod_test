@@ -1,0 +1,4 @@
+elasticsearch_service,elasticsearch:9200
+elasticsearch_service,elasticsearch:9300
+kibana_server,kibana:5601
+logstash_server,logstash:5044
