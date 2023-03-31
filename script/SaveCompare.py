@@ -5,7 +5,7 @@ import time
 def copy_osconfig():
     global rel_name
     # Using readlines()
-    file1 = open('configuration_and_log/configuration_os.txt', 'r')
+    file1 = open('conf/configuration_os.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
@@ -33,7 +33,7 @@ def copy_osconfig():
 def copy_appconfig():
     global rel_name
     # Using readlines()
-    file1 = open('configuration_and_log/configuration_app.txt', 'r')
+    file1 = open('conf/configuration_app.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
@@ -64,7 +64,7 @@ def stop_service():
     main_func()
 
 def deploy_service():
-    file1 = open('configuration_and_log/configuration.txt', 'r')
+    file1 = open('conf/configuration.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
@@ -91,10 +91,10 @@ def deploy_service():
     main_func()
 
 def compare_osconfig():
-    x = subprocess.check_output("cat configuration_and_log/configuration_os.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > configuration_and_log/configuration1_os.txt", shell=True)
+    x = subprocess.check_output("cat conf/configuration_os.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > conf/configuration1_os.txt", shell=True)
     
     # Using readlines()
-    file1 = open('configuration_and_log/configuration1_os.txt', 'r')
+    file1 = open('conf/configuration1_os.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
@@ -117,17 +117,17 @@ def compare_osconfig():
         print("******Works start**********")
         print("Showing the difference between $PWD/.siddos/"+ b1 +"/"+ file +"  and $PWD/.siddos/"+ b2 +"/"+ file +"")
         subprocess.call("diff $PWD/.siddos/"+ b1 +"/"+ file +" $PWD/.siddos/"+ b2 +"/"+ file +"", shell=True)
-        subprocess.check_output("rm -rf configuration_and_log/configuration1_os.txt", shell=True)
+        subprocess.check_output("rm -rf conf/configuration1_os.txt", shell=True)
         print("******Done*********")
         #time.sleep(3)
 
     print("********Completed the Work***********")
 
 def compare_appconfig():
-    x = subprocess.check_output("cat configuration_and_log/configuration_app.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > configuration_and_log/configuration1_app.txt", shell=True)
+    x = subprocess.check_output("cat conf/configuration_app.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > conf/configuration1_app.txt", shell=True)
 
     # Using readlines()
-    file1 = open('configuration_and_log/configuration1_app.txt', 'r')
+    file1 = open('conf/configuration1_app.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
@@ -150,7 +150,7 @@ def compare_appconfig():
         print("******Works start**********")
         print("Showing the difference between /home/siddapp/"+ b1 +"/"+ file +"  and /home/siddapp/"+ b2 +"/"+ file +"")
         subprocess.call("diff $PWD/.siddapp/"+ b1 +"/"+ file +" $PWD/.siddapp/"+ b2 +"/"+ file +"", shell=True)
-        subprocess.check_output("rm -rf configuration_and_log/configuration1_app.txt", shell=True)
+        subprocess.check_output("rm -rf conf/configuration1_app.txt", shell=True)
         print("******Done*********")
         #time.sleep(3)
 
@@ -183,10 +183,10 @@ def service_status():
 def connectivity_test():
 
     def url_service_function():
-        x = subprocess.check_output("cat configuration_and_log/configuration_url_service.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > configuration_and_log/configuration.txt", shell=True)
+        x = subprocess.check_output("cat conf/configuration_url_service.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > conf/configuration.txt", shell=True)
     
         # Using readlines()
-        file1 = open('configuration_and_log/configuration.txt', 'r')
+        file1 = open('conf/configuration.txt', 'r')
         Lines = file1.readlines()
         file1.close()
     
@@ -353,14 +353,14 @@ def connectivity_test():
                     time.sleep(3)
                     continue
     
-        subprocess.check_output("rm -rf configuration_and_log/configuration.txt", shell=True)
+        subprocess.check_output("rm -rf conf/configuration.txt", shell=True)
         print("********************Completed****************")
     
     def manual_change_function():
-        x = subprocess.check_output("cat configuration_and_log/configuration_manual_change.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > configuration_and_log/configuration1.txt", shell=True)
+        x = subprocess.check_output("cat conf/configuration_manual_change.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > conf/configuration1.txt", shell=True)
     
         # Using readlines()
-        file2 = open('configuration_and_log/configuration1.txt', 'r')
+        file2 = open('conf/configuration1.txt', 'r')
         Lines = file2.readlines()
         file2.close()
     
@@ -394,7 +394,7 @@ def connectivity_test():
             print("********************Done****************")
             time.sleep(3)
     
-        subprocess.check_output("rm -rf configuration_and_log/configuration1.txt", shell=True)
+        subprocess.check_output("rm -rf conf/configuration1.txt", shell=True)
         print("********************Completed****************")
 
     def manual_input():
