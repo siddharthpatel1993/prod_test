@@ -173,7 +173,7 @@ def service_status():
     else:
         print("Apache is not running")
 
-def connectivity_test():
+def connectivity_test(test_type):
 
     def url_service_function():
         x = subprocess.check_output("cat conf/configuration_url_service.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > conf/configuration.txt", shell=True)
@@ -405,18 +405,12 @@ def connectivity_test():
     
         print("********************Completed****************")
 
-    print('''Press 1 for URL service type connectivity test
-Press 2 for Manual configuration type connectivity test
-Press 3 for giving input of host and port from keyboard everytime''')
-    option = int(input())
-    if( option == 1 ):
+    if( test_type=='url' ):
         print("*****************Checking the connection starts****************")
         url_service_function()
-    elif( option == 2 ):
-        print("*****************Checking the connection starts****************")
+    elif( test_type=='mc' ):
         manual_change_function()
-    elif( option == 3 ):
-        print("*****************Checking the connection starts****************")
+    elif( test_type=='mi' ):
         manual_input()
     else:
         print("You gave wrong choice, pls give right input")
@@ -424,17 +418,21 @@ Press 3 for giving input of host and port from keyboard everytime''')
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-S', '--save', dest='save', help='Save the os/app releated config files', type=str)
-    parser.add_argument('-C', '--Config', dest='config', help='Configuration you would like to save os or app', type=str)
-    parser.add_argument('-N', '--name', dest='name', help='Name of the release', type=str)
-    parser.add_argument('--com', dest='compare', help='Compare', type=str)
-    parser.add_argument('--rel1', dest='rel1', help='Compare', type=str)
-    parser.add_argument('--rel2', dest='rel2', help='Compare', type=str)
+    parser.add_argument('-S', dest='save', help='Save the os/app releated config files', type=str)
+    parser.add_argument('-C', dest='config', help='Configuration you would like to save os or app', type=str)
+    parser.add_argument('-N', dest='name', help='Name of the release', type=str)
+    parser.add_argument('-com', dest='compare', help='Compare', type=str)
+    parser.add_argument('-rel1', dest='rel1', help='Release1 Name', type=str)
+    parser.add_argument('-rel2', dest='rel2', help='Release2 Name', type=str)
+    parser.add_argument('-con', dest='connect', help='connect', type=str)
+    parser.add_argument('-type', dest='type', help='Type of connectivity test', type=str)
     args = parser.parse_args()
     
     release_name = args.name
     release1 = args.rel1 
     release2 = args.rel2
+    test_type = args.type
+
     if (args.save=='save' and args.config=='os'):
         copy_osconfig(release_name)
     elif (args.save=='save' and  args.config=='app'):
@@ -443,8 +441,10 @@ if __name__=="__main__":
         compare_osconfig(release1, release2)
     elif (args.compare=='compare' and args.config=='app'):
         compare_appconfig(release1, release2)
+    elif (args.connect=='connect'):
+        connectivity_test(test_type)
     else:
-        print('''python3 SaveCompare.py -S save -C os|app -N name
-python3 Savecompare.py --com compare -C os|app --rel1 release_name --rel2 release_name''')
-
+        print('''python3 SaveCompare.py -S save -C <os|app> -N name
+python3 Savecompare.py --com compare -C <os|app> --rel1 release_name --rel2 release_name
+python3 SaveCompare.py --con connect --type <url|mc|mi>''')
 

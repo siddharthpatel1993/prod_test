@@ -1,4 +1,2 @@
-elasticsearch_service=http://elasticsearch:9200
-elasticsearch_service=http://elasticsearch:9300
-kibana_server=http://kibana:5601
-logstash_server=http://logstash:5044
+ubuntu_service=http://ubuntuhost:22
+amazon_service=http://amazonlinuxhost:22
