@@ -1,16 +1,16 @@
 import subprocess
 import re
 import time
+import argparse
 
-def copy_osconfig():
-    global rel_name
+def copy_osconfig(release_name):
     # Using readlines()
     file1 = open('conf/configuration_os.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
     count = 0
-    rel_name = input("Enter the release name\n")
+    #rel_name = input("Enter the release name\n")
     #Strips the newline character
     for line in Lines:
         count = count + 1
@@ -26,19 +26,18 @@ def copy_osconfig():
         m1 = s1.search(a1)
         file=m1.group().lstrip(',')
 
-        subprocess.check_output("mkdir -p $PWD/.siddos/"+ rel_name +"", shell=True)
-        subprocess.run(""+ command +" 2>/dev/null >> $PWD/.siddos/"+ rel_name +"/"+file+"", shell=True)
+        subprocess.check_output("mkdir -p $PWD/.siddos/"+ release_name +"", shell=True)
+        subprocess.run(""+ command +" 2>/dev/null >> $PWD/.siddos/"+ release_name +"/"+file+"", shell=True)
 
 
-def copy_appconfig():
-    global rel_name
+def copy_appconfig(release_name):
     # Using readlines()
     file1 = open('conf/configuration_app.txt', 'r')
     Lines = file1.readlines()
     file1.close()
 
     count = 0
-    rel_name = input("Enter the release name\n")
+    #rel_name = input("Enter the release name\n")
     #Strips the newline character
     for line in Lines:
         count = count + 1
@@ -54,8 +53,8 @@ def copy_appconfig():
         m1 = s1.search(a1)
         file=m1.group().lstrip(',')
 
-        subprocess.check_output("mkdir -p $PWD/.siddapp/"+ rel_name +"", shell=True)
-        subprocess.run(""+ command +" 2>/dev/null >> $PWD/.siddapp/"+ rel_name +"/"+file+"", shell=True)
+        subprocess.check_output("mkdir -p $PWD/.siddapp/"+ release_name +"", shell=True)
+        subprocess.run(""+ command +" 2>/dev/null >> $PWD/.siddapp/"+ release_name +"/"+file+"", shell=True)
 
 
 def stop_service():
@@ -90,7 +89,7 @@ def deploy_service():
     print("*****Completed*****")
     main_func()
 
-def compare_osconfig():
+def compare_osconfig(release1, release2):
     x = subprocess.check_output("cat conf/configuration_os.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > conf/configuration1_os.txt", shell=True)
     
     # Using readlines()
@@ -100,9 +99,6 @@ def compare_osconfig():
 
     count = 0
     #Strips the newline character
-
-    b1 = input("enter the first dir\n")
-    b2 = input("enter the second dir\n")
 
     for line in Lines:
         count = count + 1
@@ -115,15 +111,15 @@ def compare_osconfig():
         file=m1.group().lstrip(',')
 
         print("******Works start**********")
-        print("Showing the difference between $PWD/.siddos/"+ b1 +"/"+ file +"  and $PWD/.siddos/"+ b2 +"/"+ file +"")
-        subprocess.call("diff $PWD/.siddos/"+ b1 +"/"+ file +" $PWD/.siddos/"+ b2 +"/"+ file +"", shell=True)
+        print("Showing the difference between $PWD/.siddos/"+ release2 +"/"+ file +"  and $PWD/.siddos/"+ release1 +"/"+ file +"")
+        subprocess.call("diff $PWD/.siddos/"+ release2 +"/"+ file +" $PWD/.siddos/"+ release1 +"/"+ file +"", shell=True)
         subprocess.check_output("rm -rf conf/configuration1_os.txt", shell=True)
         print("******Done*********")
         #time.sleep(3)
 
     print("********Completed the Work***********")
 
-def compare_appconfig():
+def compare_appconfig(release1, release2):
     x = subprocess.check_output("cat conf/configuration_app.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > conf/configuration1_app.txt", shell=True)
 
     # Using readlines()
@@ -133,9 +129,6 @@ def compare_appconfig():
 
     count = 0
     #Strips the newline character
-
-    b1 = input("enter the first dir\n")
-    b2 = input("enter the second dir\n")
 
     for line in Lines:
         count = count + 1
@@ -148,8 +141,8 @@ def compare_appconfig():
         file=m1.group().lstrip(',')
 
         print("******Works start**********")
-        print("Showing the difference between /home/siddapp/"+ b1 +"/"+ file +"  and /home/siddapp/"+ b2 +"/"+ file +"")
-        subprocess.call("diff $PWD/.siddapp/"+ b1 +"/"+ file +" $PWD/.siddapp/"+ b2 +"/"+ file +"", shell=True)
+        print("Showing the difference between /home/siddapp/"+ release2 +"/"+ file +"  and /home/siddapp/"+ release1 +"/"+ file +"")
+        subprocess.call("diff $PWD/.siddapp/"+ release2 +"/"+ file +" $PWD/.siddapp/"+ release1 +"/"+ file +"", shell=True)
         subprocess.check_output("rm -rf conf/configuration1_app.txt", shell=True)
         print("******Done*********")
         #time.sleep(3)
@@ -430,46 +423,28 @@ Press 3 for giving input of host and port from keyboard everytime''')
 
 
 if __name__=="__main__":
-    print("*****main option starts******")
-    print('''enter 1 to copy the OS releated config files
-enter 2 to copy the app releated config files
-enter 3 to stop the service
-enter 4 to deploy the service
-enter 5 to compare the os config files
-enter 6 to compare the app config files
-enter 7 see the checksum if that is ok
-enter 8 to start the app
-enter 9 check the alarm
-enter 10 to notify everyone through email
-enter 11 to check the status
-enter 12 for connectivity test
-enter other than 1-12 to exit''')
-    print("*******main option ends********")
-    a = input()
-    if (a=='1'):
-        copy_osconfig()
-    elif(a=='2'):
-        copy_appconfig()
-    elif (a=='3'):
-        stop_service()
-    elif(a=='4'):
-        deploy_service()
-    elif(a=='5'):
-        compare_osconfig()
-    elif (a=='6'):
-        compare_appconfig()
-    elif(a=='7'):
-        check_checksum()
-    elif(a=='8'):
-        start_service()
-    elif(a=='9'):
-        check_alarm()
-    elif(a=='10'):
-        Notify_everyone()
-    elif(a=='11'):
-        service_status()
-    elif(a=='12'):
-        connectivity_test()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-S', '--save', dest='save', help='Save the os/app releated config files', type=str)
+    parser.add_argument('-C', '--Config', dest='config', help='Configuration you would like to save os or app', type=str)
+    parser.add_argument('-N', '--name', dest='name', help='Name of the release', type=str)
+    parser.add_argument('--com', dest='compare', help='Compare', type=str)
+    parser.add_argument('--rel1', dest='rel1', help='Compare', type=str)
+    parser.add_argument('--rel2', dest='rel2', help='Compare', type=str)
+    args = parser.parse_args()
+    
+    release_name = args.name
+    release1 = args.rel1 
+    release2 = args.rel2
+    if (args.save=='save' and args.config=='os'):
+        copy_osconfig(release_name)
+    elif (args.save=='save' and  args.config=='app'):
+        copy_appconfig(release_name)
+    elif (args.compare=='compare' and args.config=='os'):
+        compare_osconfig(release1, release2)
+    elif (args.compare=='compare' and args.config=='app'):
+        compare_appconfig(release1, release2)
     else:
-        print("Exiting...")
-        #break
+        print('''python3 SaveCompare.py -S save -C os|app -N name
+python3 Savecompare.py --com compare -C os|app --rel1 release_name --rel2 release_name''')
+
+
