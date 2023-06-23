@@ -1,4 +1,9 @@
-ubuntu_service,ubuntuhost:22
-amazon_service,amazonlinuxhost:22
-kibana_server,kibana:5601
-logstash_server,logstash:5044
+grafana_service,grafana:3000
+node_exporter_service,node_exporter:9100
+prometheus_service,prometheus:9090
+logstash_service,logstash:5044
+kibana_service,kibana:5601
+filebeat_service,filebeat:80
+elasticsearch_service,elasticsearch:9200
+jolly_williams_service,localhost:80
+jenkinsserver_service,jenkinsserver:8080

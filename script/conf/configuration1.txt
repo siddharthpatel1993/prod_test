@@ -1,4 +1,0 @@
-ubuntu_service,ubuntuhost:22
-amazon_service,amazonlinuxhost:22
-kibana_server,kibana:5601
-logstash_server,logstash:5044

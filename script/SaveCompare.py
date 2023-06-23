@@ -382,7 +382,7 @@ def connectivity_test(test_type):
             port = m2.group().lstrip(':')
             print("Port ==> "+ port +"")
     
-            y = subprocess.call("nc -vz -w 5 "+ host +" "+ port +"", shell=True)
+            y = subprocess.call("nc -vz -w 5 "+ host +" "+ port +"; nc -vz -w 5 "+ host +" "+ port +" >> file.txt 2>&1", shell=True)
     
             print("********************Done****************")
             time.sleep(3)
