@@ -175,14 +175,35 @@ def service_status():
 
 def connectivity_test(test_type):
 
+    def set_conf():
+        w = subprocess.check_output("cp conf/configuration_manual_change.txt conf/configuration_manual_change.txt.bkp", shell=True, universal_newlines=True)
+        x = subprocess.check_output("docker network inspect ci_cd_part1_ci_cd_1_network | grep -A 4 jenkinsserver | grep IPv4Address", shell=True, universal_newlines=True)
+
+        s1 = re.compile(r'[0-9.]+/')
+        m1 = s1.search(x)
+        jenkins_ip = (m1.group(0).rstrip('/'))
+
+        y = subprocess.check_output("docker network inspect ci_cd_part1_ci_cd_1_network | grep -A 4 apacheserver | grep IPv4Address", shell=True, universal_newlines=True)
+
+        s2 = re.compile(r'[0-9.]+/')
+        m2 = s2.search(y)
+        apache_ip = (m2.group(0).rstrip('/'))
+
+        z1 = subprocess.check_output("sed -i s/jenkinsserver/"+ jenkins_ip +"/g conf/configuration_manual_change.txt", shell=True, universal_newlines=True)
+        z2 = subprocess.check_output("sed -i s/apacheserver/"+ apache_ip +"/g conf/configuration_manual_change.txt", shell=True, universal_newlines=True)
+        
     def test_code():
+        #failed scenario = Name or service not known, No address associated with hostname, Temporary failure in name resolution
+        # passed scenario =
         pass_count = 0
         fail_count = 0
         fail_count1 = 0
         fail_count2 = 0
+        fail_count3 = 0
         pass_host = []
         fail_host1 = []
         fail_host2 = []
+        fail_host3 = []
 
         print("================================SUMMARY=========================")
         file3 = open('logs/file.txt', 'r')
@@ -195,7 +216,7 @@ def connectivity_test(test_type):
             if 'succeeded' in a1:
                 pass_count = pass_count + 1
 
-                s1 = re.compile(r'Connection to [A-Za-z_-]+')
+                s1 = re.compile(r'Connection to [A-Za-z_0-9.]+')
                 m1 = s1.search(a1)
                 temp_host1 = m1.group().lstrip('Connection to ')
                 host1 = temp_host1+':'
@@ -234,7 +255,21 @@ def connectivity_test(test_type):
 
                 fail_host2.append(host3+port3)
 
-        fail_count = fail_count1 + fail_count2
+            elif 'Temporary failure in name resolution' in a1:
+                fail_count3 = fail_count3 + 1
+
+                s6 = re.compile(r'"[A-Za-z_-]+"')
+                m6 = s6.search(a1)
+                temp_host4 = m6.group().lstrip('"').rstrip('"')
+                host4 = temp_host4+':'
+
+                s7 = re.compile(r'port [0-9]+')
+                m7 = s7.search(a1)
+                port4 = m7.group(0).lstrip("port ")
+
+                fail_host3.append(host4+port4)
+
+        fail_count = fail_count1 + fail_count2 + fail_count3
         print("Total =>",pass_count + fail_count)
         print("----------------------------------------------------------------")
         print("Passed =>",pass_count)
@@ -251,6 +286,11 @@ def connectivity_test(test_type):
             elif (fail_count2 > 0):
                 print("\nReason => No address associated with hostname")
                 for i in fail_host2:
+                    print(i)
+
+            elif (fail_count3 > 0):
+                print("\nReason => Temporary failure in name resolution")
+                for i in fail_host3:
                     print(i)
         print("----------------------------------------------------------------")
         print("================================END=========================")
@@ -431,6 +471,7 @@ def connectivity_test(test_type):
         print("********************Completed****************")
     
     def manual_change_function():
+        set_conf()
         x1 = subprocess.check_output("cat conf/configuration_manual_change.txt | grep -v '#' | sed '/^$/d;s/[[:blank:]]//g' > conf/configuration1.txt", shell=True)
         x2 = subprocess.call("rm -rf logs/file.txt", shell=True)
         
@@ -439,6 +480,7 @@ def connectivity_test(test_type):
         Lines = file2.readlines()
         file2.close()
     
+        print("*****************Checking the connection starts****************")
         count = 0
         #Strips the newline character
         for line in Lines:
@@ -472,6 +514,9 @@ def connectivity_test(test_type):
         subprocess.check_output("rm -rf conf/configuration1.txt", shell=True)
         test_code()
         print("********************Completed****************")
+
+        subprocess.check_output("cp conf/configuration_manual_change.txt.bkp conf/configuration_manual_change.txt", shell=True, universal_newlines=True)
+        subprocess.check_output("rm -rf conf/configuration_manual_change.txt.bkp", shell=True, universal_newlines=True)
 
     def manual_input():
         n = int(input("Enter the number of servers you have for test\n"))

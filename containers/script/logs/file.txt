@@ -1,0 +1,2 @@
+Connection to 172.19.0.2 80 port [tcp/http] succeeded!
+Connection to 172.19.0.3 8080 port [tcp/http-alt] succeeded!
