@@ -1,0 +1,4 @@
+Connection to apacheserver 80 port [tcp/http] succeeded!
+Connection to apacheserver 22 port [tcp/ssh] succeeded!
+Connection to jenkinsserver 8080 port [tcp/http-alt] succeeded!
+Connection to jenkinsserver 22 port [tcp/ssh] succeeded!

@@ -1,0 +1,2 @@
+ubuntu_service=http://ubuntuhost:22
+amazon_service=http://amazonlinuxhost:22

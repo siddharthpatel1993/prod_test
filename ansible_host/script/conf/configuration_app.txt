@@ -1,0 +1,9 @@
+ssh apacheserver service --status-all,os_servicestatus.txt
+ssh apacheserver apt list | grep installed | grep -v automatic | grep -v auto-removable,os_rpmlist.txt
+ssh apacheserver cat /var/www/html/index.html ,default_index.txt
+ssh apacheserver cat /var/www/website1/index.html ,website1_index.txt
+ssh apacheserver cat /etc/apache2/sites-available/000-default.conf ,default_vh.conf
+ssh apacheserver cat /etc/apache2/sites-available/website1.conf ,website1_vh.conf
+ssh apacheserver cat /etc/apache2/conf-available/security.conf ,security.conf
+ssh apacheserver cat /etc/apache2/apache2.conf ,apache2.conf
+ssh apacheserver apache2ctl -M ,modules_enabled.txt

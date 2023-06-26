@@ -1,0 +1,5 @@
+ssh jenkinsserver java --version,os_javaversion.txt
+ssh jenkinsserver cat /usr/share/keyrings/jenkins-keyring.asc,os_jenkins-keyring.asc,os_jenkins-keyring.asc.txt
+ssh jenkinsserver cat /etc/apt/sources.list.d/jenkins.list,os_jenkins.list.txt
+ssh jenkinsserver service --status-all,os_servicestatus.txt
+ssh jenkinsserver apt list --installed 2>/dev/null | egrep '^gnupg|^wget|^sudo|^curl|^openjdk*|^jenkins',os_rpmlist.txt
