@@ -1,4 +1,10 @@
-Connection to apacheserver 80 port [tcp/http] succeeded!
-Connection to apacheserver 22 port [tcp/ssh] succeeded!
+Connection to webserver 80 port [tcp/http] succeeded!
+nc: connect to webserver port 443 (tcp) failed: Connection refused
+Connection to webserver 22 port [tcp/ssh] succeeded!
+Connection to webserver 9100 port [tcp/*] succeeded!
+Connection to logstash 5044 port [tcp/*] succeeded!
+Connection to kibana 5601 port [tcp/*] succeeded!
+Connection to elasticsearch 9200 port [tcp/*] succeeded!
 Connection to jenkinsserver 8080 port [tcp/http-alt] succeeded!
-Connection to jenkinsserver 22 port [tcp/ssh] succeeded!
+Connection to grafana 3000 port [tcp/*] succeeded!
+Connection to prometheus 9090 port [tcp/*] succeeded!
