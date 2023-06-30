@@ -1,4 +1,4 @@
-#ansible_manager,ansibleserver:22
+ansible_manager,localhost:22
 #ansible_host1,webserver:22
 #ansible_host2,amazonlinuxhost:22
 
