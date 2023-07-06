@@ -14,7 +14,8 @@ web_service4,webserver:9100
 logstash_service,logstash:5044
 kibana_service,kibana:5601
 #filebeat_service,filebeat:80
-elasticsearch_service,elasticsearch:9200
+elasticsearch_service1,elasticsearch:9200
+elasticsearch_service2,elasticsearch:9300
 
 jenkins_service,jenkinsserver:8080
 #jenkins_service,jenkinsserver:22
@@ -25,5 +26,8 @@ jenkins_service,jenkinsserver:8080
 grafana_service,grafana:3000
 #node_exporter_service,node_exporter:9100
 prometheus_service,prometheus:9090
+
+alertmanager_service1,alertmanager:9093
+alertmanager_service2,alertmanager:9094
 
 #terraform_service,terraform:80
